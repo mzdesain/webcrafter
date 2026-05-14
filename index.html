@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebCrafter - Jasa Pembuatan Website Profesional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6', // blue-500
+                        secondary: '#1e40af', // blue-800
+                        accent: '#f59e0b', // amber-500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Styles for extra flair */
+        .gradient-text {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-pattern {
+            background-color: #f8fafc;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23cbd5e1' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        /* Floating WhatsApp Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .wa-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Chat Box Transition */
+        #wa-chat-box {
+            transition: all 0.3s ease-in-out;
+            transform-origin: bottom right;
+        }
+        #wa-chat-box.hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+        #wa-chat-box:not(.hidden) {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 antialiased bg-slate-50 relative">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="text-2xl font-bold tracking-tighter text-secondary flex items-center gap-2">
+                        <i class="fas fa-code text-primary"></i> WebCrafter
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#beranda" class="text-gray-600 hover:text-primary font-medium transition-colors">Beranda</a>
+                    <a href="#layanan" class="text-gray-600 hover:text-primary font-medium transition-colors">Layanan</a>
+                    <a href="#paket" class="text-gray-600 hover:text-primary font-medium transition-colors">Paket Harga</a>
+                    <a href="https://ayopesan.vercel.app/" target="_blank" class="text-gray-600 hover:text-primary font-medium transition-colors">Portofolio</a>
+                    <!-- Mengubah fungsi klik Konsultasi Gratis di Desktop -->
+                    <button onclick="toggleWaChat()" class="bg-primary hover:bg-blue-600 text-white px-6 py-2 rounded-full font-medium transition-colors shadow-md hover:shadow-lg focus:outline-none">
+                        Konsultasi Gratis
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-lg">
+                <a href="#beranda" class="block px-3 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md">Beranda</a>
+                <a href="#layanan" class="block px-3 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md">Layanan</a>
+                <a href="#paket" class="block px-3 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md">Paket Harga</a>
+                <a href="https://ayopesan.vercel.app/" target="_blank" class="block px-3 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md">Portofolio</a>
+                <!-- Mengubah fungsi klik Konsultasi Gratis di Mobile -->
+                <button onclick="toggleWaChat(); document.getElementById('mobile-menu').classList.add('hidden');" class="w-full text-left block px-3 py-2 text-primary font-medium hover:bg-gray-50 rounded-md focus:outline-none">
+                    Konsultasi Gratis
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden hero-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <span class="text-primary font-semibold tracking-wider uppercase text-sm mb-4 block">Solusi Digital Bisnis Anda</span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-6 leading-tight">
+                    Wujudkan Website Impian Anda Bersama <span class="gradient-text">Profesional</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                    Kami membantu UKM, Perusahaan, dan Personal untuk memiliki website modern, cepat, dan dioptimasi untuk mendatangkan lebih banyak pelanggan.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#paket" class="bg-primary hover:bg-blue-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        Lihat Paket Harga
+                    </a>
+                    <a href="https://ayopesan.vercel.app/" target="_blank" class="bg-white border-2 border-gray-200 text-gray-700 hover:border-primary hover:text-primary px-8 py-4 rounded-full font-semibold text-lg transition-all">
+                        Lihat Portofolio
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Decorative elements -->
+        <div class="absolute top-1/4 left-10 w-20 h-20 bg-blue-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div class="absolute top-1/3 right-10 w-24 h-24 bg-purple-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-1/4 left-1/3 w-32 h-32 bg-yellow-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+    </section>
+
+    <!-- Mengapa Memilih Kami -->
+    <section id="layanan" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Mengapa Memilih WebCrafter?</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">Kami tidak hanya membuat website, kami membangun aset digital yang bekerja untuk bisnis Anda 24/7.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-slate-50 rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-shadow duration-300 group">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-mobile-alt text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Desain Responsif</h3>
+                    <p class="text-gray-600">Tampil sempurna di semua perangkat, mulai dari smartphone, tablet, hingga layar desktop besar.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-slate-50 rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-shadow duration-300 group">
+                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-bolt text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Super Cepat</h3>
+                    <p class="text-gray-600">Dioptimasi untuk kecepatan loading maksimal, memanjakan pengunjung dan disukai Google.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-slate-50 rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-shadow duration-300 group">
+                    <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-search text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">SEO Friendly</h3>
+                    <p class="text-gray-600">Struktur kode yang bersih dan teroptimasi memudahkan website Anda ditemukan di mesin pencari.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-slate-50 rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-shadow duration-300 group">
+                    <div class="w-14 h-14 bg-yellow-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-shield-alt text-2xl text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Keamanan Terjamin</h3>
+                    <p class="text-gray-600">Dilengkapi SSL gratis dan perlindungan dasar dari malware serta serangan siber.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="bg-slate-50 rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-shadow duration-300 group">
+                    <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-cogs text-2xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Mudah Dikelola</h3>
+                    <p class="text-gray-600">Menggunakan CMS ramah pengguna (seperti WordPress), Anda bisa update konten sendiri dengan mudah.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="bg-slate-50 rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-shadow duration-300 group">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-headset text-2xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Support Prioritas</h3>
+                    <p class="text-gray-600">Tim teknis kami siap membantu Anda jika mengalami kendala atau membutuhkan konsultasi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing / Paket Harga -->
+    <section id="paket" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Pilih Paket Sesuai Kebutuhan</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">Investasi terbaik untuk kehadiran online bisnis Anda. Harga transparan tanpa biaya tersembunyi.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Silver Package -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow flex flex-col">
+                    <div class="p-8 text-center bg-gray-50 border-b border-gray-100">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Silver</h3>
+                        <p class="text-gray-500 text-sm mb-6">Cocok untuk personal / blog</p>
+                        <div class="text-4xl font-extrabold text-gray-900 mb-2">Rp 1.5<span class="text-xl text-gray-500 font-normal">jt</span></div>
+                        <p class="text-sm text-gray-500">Perpanjangan Rp 500rb/thn</p>
+                    </div>
+                    <div class="p-8 flex-grow">
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-green-500 mt-1 mr-3"></i> Domain .com/.net (1 Tahun)</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-green-500 mt-1 mr-3"></i> Hosting SSD 1GB</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-green-500 mt-1 mr-3"></i> 1 Akun Email Bisnis</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-green-500 mt-1 mr-3"></i> Tema Premium (Pilihan Terbatas)</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-green-500 mt-1 mr-3"></i> Maksimal 5 Halaman</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-green-500 mt-1 mr-3"></i> Desain Responsif Dasar</li>
+                            <li class="flex items-start text-gray-400"><i class="fas fa-times mt-1 mr-3"></i> <del>Integrasi Payment Gateway</del></li>
+                            <li class="flex items-start text-gray-400"><i class="fas fa-times mt-1 mr-3"></i> <del>SEO Lanjutan</del></li>
+                        </ul>
+                    </div>
+                    <div class="p-8 pt-0 mt-auto">
+                        <button onclick="openWA('Halo, saya tertarik dengan Paket Pembuatan Website *Silver*. Boleh minta info detailnya?')" class="w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold rounded-xl transition-colors border border-gray-300">
+                            Pesan Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gold Package -->
+                <div class="bg-white rounded-2xl shadow-xl border-2 border-primary relative overflow-hidden transform md:-translate-y-4 flex flex-col">
+                    <div class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
+                        Terpopuler
+                    </div>
+                    <div class="p-8 text-center bg-blue-50 border-b border-blue-100">
+                        <h3 class="text-2xl font-bold text-primary mb-2">Gold</h3>
+                        <p class="text-gray-500 text-sm mb-6">Cocok untuk Company Profile UKM</p>
+                        <div class="text-4xl font-extrabold text-gray-900 mb-2">Rp 3.5<span class="text-xl text-gray-500 font-normal">jt</span></div>
+                        <p class="text-sm text-gray-500">Perpanjangan Rp 800rb/thn</p>
+                    </div>
+                    <div class="p-8 flex-grow">
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-primary mt-1 mr-3"></i> Domain Bebas (1 Tahun)</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-primary mt-1 mr-3"></i> Hosting SSD 3GB</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-primary mt-1 mr-3"></i> 5 Akun Email Bisnis</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-primary mt-1 mr-3"></i> Custom Desain Premium</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-primary mt-1 mr-3"></i> Maksimal 10 Halaman</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-primary mt-1 mr-3"></i> Tombol Chat WhatsApp</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-primary mt-1 mr-3"></i> Setup SEO Dasar (On-Page)</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-primary mt-1 mr-3"></i> Input 10 Artikel/Produk Awal</li>
+                        </ul>
+                    </div>
+                    <div class="p-8 pt-0 mt-auto">
+                        <button onclick="openWA('Halo, saya tertarik dengan Paket Pembuatan Website *Gold* (Terpopuler). Bisa konsultasi lebih lanjut?')" class="w-full py-3 px-4 bg-primary hover:bg-blue-600 text-white font-semibold rounded-xl transition-colors shadow-md">
+                            Pesan Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Diamond Package -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow flex flex-col">
+                    <div class="p-8 text-center bg-gray-50 border-b border-gray-100">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Diamond</h3>
+                        <p class="text-gray-500 text-sm mb-6">Cocok untuk Toko Online</p>
+                        <div class="text-4xl font-extrabold text-gray-900 mb-2">Rp 6.0<span class="text-xl text-gray-500 font-normal">jt</span></div>
+                        <p class="text-sm text-gray-500">Perpanjangan Rp 1.2jt/thn</p>
+                    </div>
+                    <div class="p-8 flex-grow">
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-green-500 mt-1 mr-3"></i> Domain Bebas (1 Tahun)</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-green-500 mt-1 mr-3"></i> Hosting NVMe 5GB (Lebih Cepat)</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-green-500 mt-1 mr-3"></i> 10 Akun Email Bisnis</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-green-500 mt-1 mr-3"></i> Sistem Toko Online (Cart, Checkout)</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-green-500 mt-1 mr-3"></i> Halaman Tidak Terbatas*</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-green-500 mt-1 mr-3"></i> Integrasi Ongkir Otomatis</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-green-500 mt-1 mr-3"></i> Integrasi Payment Gateway (Midtrans/Xendit)</li>
+                            <li class="flex items-start text-gray-600"><i class="fas fa-check text-green-500 mt-1 mr-3"></i> Input 50 Produk Awal</li>
+                        </ul>
+                    </div>
+                    <div class="p-8 pt-0 mt-auto">
+                        <button onclick="openWA('Halo, saya tertarik dengan Paket Pembuatan Website *Diamond* untuk Toko Online. Bagaimana detail sistemnya?')" class="w-full py-3 px-4 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold rounded-xl transition-colors border border-gray-300">
+                            Pesan Sekarang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Platinum Package -->
+                <div class="bg-gray-900 rounded-2xl shadow-xl border border-gray-800 overflow-hidden flex flex-col">
+                    <div class="p-8 text-center border-b border-gray-800">
+                        <h3 class="text-2xl font-bold text-accent mb-2">Platinum</h3>
+                        <p class="text-gray-400 text-sm mb-6">Untuk Corporate / Instansi Besar</p>
+                        <div class="text-4xl font-extrabold text-white mb-2">Mulai <br> Rp 15<span class="text-xl text-gray-400 font-normal">jt</span></div>
+                        <p class="text-sm text-gray-500">Sesuai Kesepakatan</p>
+                    </div>
+                    <div class="p-8 flex-grow">
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start text-gray-300"><i class="fas fa-check text-accent mt-1 mr-3"></i> Cloud VPS Server (Milik Sendiri)</li>
+                            <li class="flex items-start text-gray-300"><i class="fas fa-check text-accent mt-1 mr-3"></i> Desain UI/UX Eksklusif (Figma to Code)</li>
+                            <li class="flex items-start text-gray-300"><i class="fas fa-check text-accent mt-1 mr-3"></i> Pengembangan Fitur Custom (PHP/Laravel/React)</li>
+                            <li class="flex items-start text-gray-300"><i class="fas fa-check text-accent mt-1 mr-3"></i> Keamanan Tingkat Lanjut</li>
+                            <li class="flex items-start text-gray-300"><i class="fas fa-check text-accent mt-1 mr-3"></i> Optimasi Kecepatan Ekstrem</li>
+                            <li class="flex items-start text-gray-300"><i class="fas fa-check text-accent mt-1 mr-3"></i> Maintenance Server Bulanan</li>
+                            <li class="flex items-start text-gray-300"><i class="fas fa-check text-accent mt-1 mr-3"></i> Pelatihan Penggunaan (Offline/Online)</li>
+                        </ul>
+                    </div>
+                    <div class="p-8 pt-0 mt-auto">
+                        <button onclick="openWA('Halo, saya ingin mendiskusikan kebutuhan sistem/website khusus untuk perusahaan (Paket *Platinum*). Kapan bisa mengatur jadwal meeting?')" class="w-full py-3 px-4 bg-accent hover:bg-yellow-500 text-gray-900 font-bold rounded-xl transition-colors shadow-lg">
+                            Hubungi Kami
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimoni Section -->
+    <section id="testimoni" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Apa Kata Klien Kami?</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">Kepercayaan dan kepuasan pelanggan adalah prioritas utama kami dalam setiap project.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimoni 1 -->
+                <div class="bg-slate-50 rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">"Hasilnya sangat memuaskan! WebCrafter bisa menerjemahkan apa yang saya mau ke dalam desain website yang modern. Penjualan toko online saya meningkat drastis sejak website diluncurkan."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-primary font-bold text-xl">B</div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Budi Santoso</h4>
+                            <p class="text-sm text-gray-500">Owner, Toko Kopi Maju</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimoni 2 -->
+                <div class="bg-slate-50 rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">"Pelayanan luar biasa! Adminnya sangat responsif dan sabar melayani revisi. Fitur-fitur company profile kami berjalan lancar dan sangat membantu branding perusahaan."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-xl">S</div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Siti Rahmawati</h4>
+                            <p class="text-sm text-gray-500">Direktur, PT Gemilang Karya</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimoni 3 -->
+                <div class="bg-slate-50 rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                    <div class="flex text-yellow-400 mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="text-gray-600 mb-6 italic">"Pengerjaan tepat waktu, bahkan lebih cepat dari target. Setup SEO-nya juga lumayan, website klinik saya sekarang gampang dicari di Google. Sangat direkomendasikan!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-xl">A</div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">dr. Anton Wijaya</h4>
+                            <p class="text-sm text-gray-500">Klinik Sehat Selalu</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-slate-50">
+         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Pertanyaan yang Sering Diajukan</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="border border-gray-200 rounded-lg">
+                    <button class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none" onclick="toggleFaq('faq1', 'icon1')">
+                        <span class="font-semibold text-gray-800">Berapa lama waktu pengerjaan website?</span>
+                        <i id="icon1" class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                    </button>
+                    <div id="faq1" class="hidden px-6 pb-4 text-gray-600">
+                        Waktu pengerjaan bervariasi tergantung paket. Paket Silver & Gold biasanya 3-7 hari kerja. Paket Diamond (Toko Online) 7-14 hari kerja. Paket Platinum tergantung kompleksitas fitur.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="border border-gray-200 rounded-lg">
+                    <button class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none" onclick="toggleFaq('faq2', 'icon2')">
+                        <span class="font-semibold text-gray-800">Apakah saya perlu menyiapkan materi (teks/gambar)?</span>
+                        <i id="icon2" class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                    </button>
+                    <div id="faq2" class="hidden px-6 pb-4 text-gray-600">
+                        Ya, sangat disarankan Anda menyiapkan logo, foto produk/perusahaan, dan teks profil singkat agar website lebih personal. Jika tidak ada, kami bisa menggunakan gambar ilustrasi (stock photo) gratis dan teks dummy sementara.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="border border-gray-200 rounded-lg">
+                    <button class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none" onclick="toggleFaq('faq3', 'icon3')">
+                        <span class="font-semibold text-gray-800">Bagaimana sistem pembayarannya?</span>
+                        <i id="icon3" class="fas fa-chevron-down text-gray-500 transition-transform"></i>
+                    </button>
+                    <div id="faq3" class="hidden px-6 pb-4 text-gray-600">
+                        Sistem pembayaran kami adalah DP 50% sebelum project dimulai (untuk pembelian domain & hosting), dan pelunasan 50% setelah website selesai dan siap online sepenuhnya.
+                    </div>
+                </div>
+            </div>
+         </div>
+    </section>
+
+    <!-- Footer / CTA -->
+    <footer class="bg-gray-900 pt-16 pb-8 border-t-4 border-primary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <div>
+                    <a href="#" class="text-2xl font-bold tracking-tighter text-white flex items-center gap-2 mb-6">
+                        <i class="fas fa-code text-primary"></i> WebCrafter
+                    </a>
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        Partner teknologi terpercaya untuk mentransformasi bisnis Anda ke era digital dengan website berkualitas tinggi dan berorientasi pada hasil.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-6 uppercase tracking-wider">Layanan Cepat</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#beranda" class="text-gray-400 hover:text-primary transition-colors">Beranda</a></li>
+                        <li><a href="#layanan" class="text-gray-400 hover:text-primary transition-colors">Layanan Kami</a></li>
+                        <li><a href="#paket" class="text-gray-400 hover:text-primary transition-colors">Harga & Paket</a></li>
+                        <li><a href="https://ayopesan.vercel.app/" target="_blank" class="text-gray-400 hover:text-primary transition-colors">Portofolio Klien</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">Syarat & Ketentuan</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-6 uppercase tracking-wider">Hubungi Kami</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start text-gray-400">
+                            <i class="fas fa-map-marker-alt mt-1.5 mr-3 text-primary"></i>
+                            <span>Jl. Teknologi No. 404, Kota Digital, Indonesia 12345</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-phone-alt mr-3 text-primary"></i>
+                            <span>+62 819-3493-1153</span>
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-envelope mr-3 text-primary"></i>
+                            <span>halo@webcrafter.id</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-500 text-sm">&copy; 2026 WebCrafter Digital Agency. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button & Chat Box -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+        
+        <!-- Chat Box (Hidden by default) -->
+        <div id="wa-chat-box" class="hidden bg-white w-80 rounded-2xl shadow-2xl mb-4 overflow-hidden border border-gray-100 flex flex-col">
+            <!-- Header -->
+            <div class="bg-green-500 p-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <!-- Profil Admin WA (Placeholder) -->
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-green-500 text-xl font-bold shadow-sm overflow-hidden">
+                            <img src="https://ui-avatars.com/api/?name=Admin+WC&background=ffffff&color=22c55e" alt="Admin" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></div>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm leading-tight">Customer Service</h4>
+                        <p class="text-green-100 text-xs">Biasanya membalas dalam 5 menit</p>
+                    </div>
+                </div>
+                <button onclick="toggleWaChat()" class="text-white hover:bg-green-600 rounded-full w-8 h-8 flex items-center justify-center transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Chat Body -->
+            <div class="p-4 bg-[url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')] bg-opacity-5 flex-grow">
+                <div class="bg-white p-3 rounded-lg rounded-tl-none shadow-sm text-sm text-gray-700 w-11/12 mb-2 relative">
+                    Halo! 👋 Terima kasih sudah mampir di WebCrafter. Ada yang bisa kami bantu terkait pembuatan website?
+                    <span class="text-[10px] text-gray-400 absolute bottom-1 right-2 block">10:00</span>
+                </div>
+            </div>
+            
+            <!-- Input Area -->
+            <div class="p-3 bg-gray-50 border-t border-gray-200 flex gap-2 items-end">
+                <textarea id="wa-message-input" rows="1" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 resize-none overflow-hidden" placeholder="Ketik pesan Anda..." oninput="autoResizeTextarea(this)"></textarea>
+                <button onclick="sendWaMessage()" class="bg-green-500 hover:bg-green-600 text-white rounded-full w-10 h-10 flex-shrink-0 flex items-center justify-center transition-colors shadow-md">
+                    <i class="fas fa-paper-plane ml-[-2px]"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Floating Button -->
+        <button id="wa-trigger-btn" onclick="toggleWaChat()" class="wa-float w-16 h-16 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-2xl flex items-center justify-center text-3xl focus:outline-none transition-transform hover:scale-110 z-50">
+            <i class="fab fa-whatsapp"></i>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // --- 1. Navbar Scroll Effect & Mobile Menu ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-md');
+                nav.classList.replace('bg-white/90', 'bg-white');
+            } else {
+                nav.classList.remove('shadow-md');
+                nav.classList.replace('bg-white', 'bg-white/90');
+            }
+        });
+
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // --- 2. FAQ Accordion Toggle ---
+        function toggleFaq(id, iconId) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById(iconId);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // --- 3. WhatsApp Logic ---
+        const waNumber = "6281934931153"; // Format: kode negara (tanpa +) lalu nomor
+        const chatBox = document.getElementById('wa-chat-box');
+        const waInput = document.getElementById('wa-message-input');
+
+        // Toggle visibility of the chat box
+        function toggleWaChat() {
+            if (chatBox.classList.contains('hidden')) {
+                chatBox.classList.remove('hidden');
+                waInput.focus();
+            } else {
+                chatBox.classList.add('hidden');
+            }
+        }
+
+        // Send message from chatbox
+        function sendWaMessage() {
+            let message = waInput.value.trim();
+            if (message === '') return;
+            
+            // Encode message for URL
+            let encodedMessage = encodeURIComponent(message);
+            // Open WhatsApp link
+            window.open(`https://wa.me/${waNumber}?text=${encodedMessage}`, '_blank');
+            
+            // Optionally clear input and close chat box after sending
+            waInput.value = '';
+            waInput.style.height = 'auto'; // reset height
+            toggleWaChat();
+        }
+
+        // Open WA directly from Pricing Buttons with predefined text
+        function openWA(predefinedText) {
+            let encodedMessage = encodeURIComponent(predefinedText);
+            window.open(`https://wa.me/${waNumber}?text=${encodedMessage}`, '_blank');
+        }
+
+        // Auto-resize textarea in chatbox
+        function autoResizeTextarea(el) {
+            el.style.height = 'auto';
+            // Set max-height to prevent it growing too tall (e.g., max 100px)
+            let newHeight = Math.min(el.scrollHeight, 100); 
+            el.style.height = newHeight + 'px';
+            
+            // Add scrollbar if it reaches max height
+            if(el.scrollHeight > 100) {
+                 el.style.overflowY = 'auto';
+            } else {
+                 el.style.overflowY = 'hidden';
+            }
+        }
+
+        // Allow sending message with 'Enter' key (but allow Shift+Enter for new line)
+        waInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault(); // Prevent default new line
+                sendWaMessage();
+            }
+        });
+    </script>
+</body>
+</html>
